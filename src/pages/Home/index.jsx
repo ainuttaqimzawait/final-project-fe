@@ -2,27 +2,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TopBar from "../../components/TopBar"
 import { Header } from '../../components/Carousel';
 import { useEffect, useState } from "react";
-import axios from "axios";
-import getProducts from "../../app/api/products";
-import { config } from "../../config";
 import { Col, Row } from 'react-bootstrap';
 import CardProduct from '../../components/CardProduct';
-// import axiosInstance from "../../config";
-// import getProducts from "../../app/api/product";
-// import CardProduct from '../../components/CardProduct';
-// import { Row } from 'react-bootstrap';
+import { getDetailProduct, getProducts } from '../../app/api/products';
 
 
 const Home = () => {
     const [products, setProducts] = useState([]);
+    const [detail, setDetail] = useState([]);
 
     useEffect(() => {
         getProducts()
             .then(({ data }) => setProducts(data.aaData));
+        getDetailProduct()
+            .then((data) => setDetail(data));
     }, []);
     return (
         <div>
-            {/* {console.log(products)} */}
+            {console.log(products[0])}
+            {console.log(detail)}
             <TopBar />
             <div
                 style={{
@@ -46,7 +44,7 @@ const Home = () => {
                     <Row style={{ width: "1190px" }}>
                         {products.map((product, i) => {
                             return (
-                                <Col key={i} md={3}>
+                                <Col key={i} md={2}>
                                     <CardProduct item={product} />
                                 </Col>
                             )

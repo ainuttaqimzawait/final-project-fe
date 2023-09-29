@@ -7,12 +7,12 @@ export default function CardProduct({ item }) {
         style={{
             width: '18rem',
             height: '24rem',
-            marginBottom: '20px'
+            margin: '0px 10px 20px 10px'
         }}>
         <Card.Img
             variant="top"
             src={`${item.photo}`}
-            style={{ width: '18rem', height: '190px' }}
+            style={{ width: '180px', height: '200px' }}
         />
         <Card.Body>
             <Card.Title>{item.name}</Card.Title>
@@ -31,7 +31,7 @@ export default function CardProduct({ item }) {
                     color: 'orange',
                     marginTop: '10px'
                 }}>
-                    Rp. { }
+                    {item.currency} {item.price}
                 </Card.Text>
                 {/* <Button variant='none' style={{
                     marginRight: '20px',

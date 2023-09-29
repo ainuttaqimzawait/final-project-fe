@@ -12,7 +12,7 @@ export const Header = () => {
             <Carousel
                 style={{
                     width: "1190px",
-                    marginTop: "145px",
+                    marginTop: "105px",
                     marginBottom: "25px",
                     borderRadius: "10px"
                 }}>

@@ -5,8 +5,8 @@ import { config } from '../../config';
 export default function CardProduct({ item }) {
     return <Card
         style={{
-            width: '18rem',
-            height: '24rem',
+            width: '180px',
+            height: '300px',
             margin: '0px 10px 20px 10px'
         }}>
         <Card.Img
@@ -15,7 +15,6 @@ export default function CardProduct({ item }) {
             style={{ width: '180px', height: '200px' }}
         />
         <Card.Body>
-            <Card.Title>{item.name}</Card.Title>
             <Card.Text>
                 {item.name}
             </Card.Text>

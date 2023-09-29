@@ -1,0 +1,1 @@
+export const FETCHING_PRODUCT = 'features/Product/SUCCESS_FETCHING_PRODUCT';

@@ -4,7 +4,7 @@ import { Header } from '../../components/Carousel';
 import { useEffect, useState } from "react";
 import { Col, Row } from 'react-bootstrap';
 import CardProduct from '../../components/CardProduct';
-import { getDetailProduct, getProducts } from '../../app/api/products';
+import { getDetailProduct, getKeyword, getProducts, getVarian } from '../../app/api/products';
 
 
 const Home = () => {
@@ -14,12 +14,12 @@ const Home = () => {
     useEffect(() => {
         getProducts()
             .then(({ data }) => setProducts(data.aaData));
-        getDetailProduct()
-            .then((data) => setDetail(data));
+        getKeyword()
+            .then(({ data }) => setDetail(data));
     }, []);
     return (
         <div>
-            {console.log(products[0])}
+            {console.log(products[10])}
             {console.log(detail)}
             <TopBar />
             <div

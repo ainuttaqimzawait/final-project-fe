@@ -3,8 +3,8 @@ import { FETCHING_PRODUCT } from "./constants"
 let initialState = {
     data: [],
     currentPage: 1,
-    totalItems: -1,
-    perPage: 25,
+    //totalItems: -1,
+    //perPage: 25,
     sorting: '',
     categories: '',
     search_name: ''

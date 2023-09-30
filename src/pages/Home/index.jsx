@@ -19,7 +19,7 @@ const Home = () => {
     }, []);
     return (
         <div>
-            {console.log(products[10])}
+            {console.log(products)}
             {console.log(detail)}
             <TopBar />
             <div

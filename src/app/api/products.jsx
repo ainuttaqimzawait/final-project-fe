@@ -3,7 +3,7 @@ import { config } from "../../config"
 
 
 export const getProducts = async (params) => {
-    return await axios.get(`${config.url}/public/hijja/product?page=2&sorting=Lates&categories=Food&search_name=none`, { params })
+    return await axios.get(`${config.url}/public/hijja/product`, { params })
 }
 
 export const getDetailProduct = async () => {

@@ -1,1 +1,1 @@
-export const FETCHING_PRODUCT = 'features/Product/SUCCESS_FETCHING_PRODUCT';
+export const FETCHING_PRODUCT = 'features/Product/FETCHING_PRODUCT';

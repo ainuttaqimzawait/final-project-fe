@@ -19,6 +19,7 @@ function TopBar() {
     return (
         < Navbar expand="lg" className="bg-body-tertiary" style={{ position: 'fixed', zIndex: "999", width: "100vw" }
         }>
+            {/* {console.log(category)} */}
             <Container fluid>
                 <Navbar.Brand href="#">
                     <Image src='hijab-logo-vector-26808833-removebg-preview.png' style={{ height: "200px", margin: "-60px 0px -80px 0px" }} />

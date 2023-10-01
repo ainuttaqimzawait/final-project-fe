@@ -5,22 +5,27 @@ import { useEffect, useState } from "react";
 import { Col, Row } from 'react-bootstrap';
 import CardProduct from '../../components/CardProduct';
 import { getDetailProduct, getKeyword, getProducts, getVarian } from '../../app/api/products';
+import { fetchProducts } from '../../app/features/Product/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
+    const products = useSelector(state => state.products);
+    const dispatch = useDispatch();
     const [detail, setDetail] = useState([]);
 
     useEffect(() => {
-        getProducts()
-            .then(({ data }) => setProducts(data.aaData));
+        // getProducts()
+        //     .then(({ data }) => setProducts(data.aaData));
+        dispatch(fetchProducts());
         getKeyword()
             .then(({ data }) => setDetail(data));
-    }, []);
+    }, [dispatch]);
     return (
         <div>
             {console.log(products)}
-            {console.log(detail)}
+            {/* {console.log(detail)} */}
             <TopBar />
             <div
                 style={{
@@ -42,7 +47,7 @@ const Home = () => {
                         justifyContent: 'center'
                     }}>
                     <Row style={{ width: "1190px" }}>
-                        {products.map((product, i) => {
+                        {products.data.map((product, i) => {
                             return (
                                 <Col key={i} md={2}>
                                     <CardProduct item={product} />

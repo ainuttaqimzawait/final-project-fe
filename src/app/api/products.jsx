@@ -6,12 +6,12 @@ export const getProducts = async (params) => {
     return await axios.get(`${config.url}/public/hijja/product`, { params })
 }
 
-export const getDetailProduct = async () => {
-    return await axios.get(`${config.url}/public/hijja/single/28545`)
+export const getDetailProduct = async (id) => {
+    return await axios.get(`${config.url}/public/hijja/single/${id}`)
 }
 
-export const getVarian = async () => {
-    return await axios.get(`${config.url}/public/hijja/varian/28545`)
+export const getVarian = async (id) => {
+    return await axios.get(`${config.url}/public/hijja/varian/${id}`)
 }
 
 export const getCategoriess = async () => {

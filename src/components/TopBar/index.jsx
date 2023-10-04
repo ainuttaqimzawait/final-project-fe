@@ -9,8 +9,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { getCategoriess } from '../../app/api/products';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useDispatch } from 'react-redux';
+import { toggleCategories } from '../../app/features/Product/actions';
 
 function TopBar() {
+    const dispatch = useDispatch();
     const [category, setCategory] = useState([])
     useEffect(() => {
         getCategoriess()
@@ -21,9 +25,11 @@ function TopBar() {
         }>
             {/* {console.log(category)} */}
             <Container fluid>
-                <Navbar.Brand href="#">
-                    <Image src='hijab-logo-vector-26808833-removebg-preview.png' style={{ height: "200px", margin: "-60px 0px -80px 0px" }} />
-                </Navbar.Brand>
+                <LinkContainer to="/">
+                    <Navbar.Brand>
+                        <Image src='hijab-logo-vector-26808833-removebg-preview.png' style={{ height: "200px", margin: "-60px 0px -80px 0px" }} />
+                    </Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="me-auto my-auto my-lg-0" style={{ display: "grid", gridAutoColumns: "800px" }}>
@@ -43,14 +49,21 @@ function TopBar() {
                         <Nav>
                             {category.map((e, i) => {
                                 return (
-                                    <Nav.Link key={i} style={{ fontSize: "13px", height: "14px" }}>{e.keyword_name}</Nav.Link>
+                                    <Nav.Link
+                                        key={i}
+                                        onClick={() => { dispatch(toggleCategories(e.keyword_id)) }}
+                                        style={{ fontSize: "13px", height: "14px" }}>
+                                        {e.keyword_name}
+                                    </Nav.Link>
                                 )
                             })}
                         </Nav>
                     </Nav>
-                    <Nav.Link href="#action1" className='me-5'>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                    </Nav.Link>
+                    <LinkContainer to="/">
+                        <Nav.Link href="#action1" className='me-5'>
+                            <FontAwesomeIcon icon={faCartShopping} />
+                        </Nav.Link >
+                    </LinkContainer>
                     <Nav className="d-flex me-5"
                         style={{ maxHeight: '100px' }}
                         navbarScroll

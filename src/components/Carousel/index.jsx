@@ -18,35 +18,35 @@ export const Header = () => {
                 }}>
                 <Carousel.Item
                     style={{
-                        height: "267px",
+                        height: "300px",
                         width: "1190px"
                     }}>
                     <img
                         src="images (1).jpeg"
                         alt="#"
                         style={{
-                            height: "267px",
+                            height: "300px",
                             width: "1190px",
                             borderRadius: "20px"
                         }} />
                 </Carousel.Item>
                 <Carousel.Item
                     style={{
-                        height: "267px",
+                        height: "300px",
                         width: "796px"
                     }}>
                     <img
                         src="images.jpeg"
                         alt="#"
                         style={{
-                            height: "267px",
+                            height: "300px",
                             width: "1190px",
                             borderRadius: "20px"
                         }} />
                 </Carousel.Item>
                 <Carousel.Item
                     style={{
-                        height: "267px",
+                        height: "300px",
                         width: "796px",
                         borderRadius: "20px"
                     }}>
@@ -54,7 +54,7 @@ export const Header = () => {
                         src="anime-original-girl-hijab-hd-wallpaper-preview.jpg"
                         alt="#"
                         style={{
-                            height: "267px",
+                            height: "300px",
                             width: "1190px",
                             borderRadius: "20px"
                         }} />

@@ -1,0 +1,21 @@
+.detail-ukuran {
+    display: flex;
+}
+
+.detail-ukuran-button {
+    margin: 5px 10px 5px 10px;
+    height: 30px;
+    width: 70px;
+    font-size: 13px;
+    background-color: #edf3e4;
+    color: #843b49;
+    border-radius: 2px;
+    border: 1px solid #843b49;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-ukuran-button:hover {
+    background-color: #843b49;
+}

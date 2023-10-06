@@ -127,35 +127,3 @@ export default Detail
 
 
 
-
-
-
-
-
-// import { React } from 'react';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Navigation, Pagination, A11y } from 'swiper/modules';
-// import 'swiper/css/bundle';
-
-// const Detail = () => {
-//     return (
-//         <div style={{ width: "100vw", paddingTop: "150px" }}>
-//             <Swiper
-//                 modules={[Navigation, Pagination, A11y]}
-//                 spaceBetween={50}
-//                 slidesPerView={3}
-//                 navigation
-//                 pagination={{ clickable: true }}
-//                 scrollbar={{ draggable: true }}
-//             >
-//                 <SwiperSlide style={{ backgroundColor: "red", height: "200px" }}>Slide 1</SwiperSlide>
-//                 <SwiperSlide style={{ backgroundColor: "blue", height: "200px" }}>Slide 2</SwiperSlide>
-//                 <SwiperSlide style={{ backgroundColor: "yellow", height: "200px" }}>Slide 3</SwiperSlide>
-//                 <SwiperSlide style={{ backgroundColor: "green", height: "200px" }}>Slide 4</SwiperSlide>
-//                 <SwiperSlide style={{ backgroundColor: "silver", height: "200px" }}>Slide 5</SwiperSlide>
-//             </Swiper>
-//         </div>
-//     );
-// };
-
-// export default Detail

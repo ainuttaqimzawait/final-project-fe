@@ -6,35 +6,24 @@ import CardProduct from '../../components/CardProduct';
 import { fetchProducts, setPage } from '../../app/features/Product/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../../components/Footer';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const Home = () => {
     const products = useSelector(state => state.products);
     const dispatch = useDispatch();
 
-
-    //||=====================================================================================================
-    const [hasMore, setHasMore] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
     const observer = useRef();
-    //======================================================================================================||
 
 
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch, products.categories, products.currentPage]);
 
-
-    //||================================================================================================
-    // if (products.data.length === 0) {
-    //     setHasMore(false)
-    //     console.log("oyeooeeeeeeeeeeeeeeeeee")
-    // }
-
     const loadMore = () => {
-        // if (!loading) {
-        //     setPageNumber(pageNumber + 1);
-        // }
-        return console.log("haloooooooooooooooooooooo")
+        return dispatch(setPage())
     };
 
     const lastProductElementRef = useRef();
@@ -47,7 +36,7 @@ const Home = () => {
         };
         observer.current = new IntersectionObserver((entries) => {
             const target = entries[0];
-            if (target.isIntersecting) {
+            if (target.isIntersecting && hasMore) {
                 loadMore();
                 console.log("Kondisi terpenuhi, memanggil loadMore()");
             } else {
@@ -63,7 +52,6 @@ const Home = () => {
         console.log('use2')
     }, [hasMore]);
 
-    //==================================================================================================================================||
 
     return (
         <div style={{ paddingBottom: "0px" }}>
@@ -86,21 +74,31 @@ const Home = () => {
                         justifyContent: 'center'
                     }}>
                     <Row style={{ width: "1190px" }}>
-                        {products.data.length === 0 ? <h1 style={{ marginTop: "1000px" }}>kosongsdfdfghjdfgh</h1> : products.data.map((product, i) => {
+                        {products.data.map((product, i) => {
                             return (
                                 <Col key={i} md={2}>
                                     <CardProduct item={product} />
                                 </Col>
                             )
                         })}
+                        <Nav.Link
+                            onClick={() => { setHasMore(true) }}
+                            style={{
+                                display: "grid",
+                                placeItems: "center",
+                                fontSize: "30px",
+                                fontWeight: "bold",
+                                height: "14px",
+                                margin: "30px 0px 90px 0px",
+                                color: "orange"
+                            }}>
+                            <div>Show More</div>
+                            <FontAwesomeIcon icon={faArrowDown} />
+                        </Nav.Link>
                     </Row>
                 </div>
-                <div ref={lastProductElementRef} style={{ backgroundColor: "red" }}>pppp</div>
-                <Nav.Link
-                    onClick={() => { dispatch(setPage()) }}
-                    style={{ fontSize: "13px", height: "14px" }}>
-                    tombol
-                </Nav.Link>
+
+                <div ref={lastProductElementRef} style={{ backgroundColor: "black", height: "1px", width: "100vw" }}></div>
                 <Footer />
             </div>
         </div>

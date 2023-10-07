@@ -2,13 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Card, Form, NavDropdown } from 'react-bootstrap';
 import { getVarian } from '../../app/api/products';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getDetailItem } from '../../app/features/DetailProduct/action';
 
 export default function CardProduct({ item }) {
     const [varian, setVarian] = useState([]);
-    const products = useSelector(state => state.products);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         getVarian(item.id)
             .then(({ data }) => setVarian(data))
@@ -21,6 +22,15 @@ export default function CardProduct({ item }) {
             });
     }, [])
 
+    const handleClick = () => {
+        let payload = {
+            detailProduct: item
+        }
+        // console.log(payload)
+        dispatch(getDetailItem(payload));
+        navigate(`/detail/${item.id}`);
+    }
+
     return <Card
         style={{
             width: '180px',
@@ -28,13 +38,13 @@ export default function CardProduct({ item }) {
             margin: '0px 10px 20px 10px',
             paddingBottom: "5px"
         }}>
-        <LinkContainer to={`/detail/${item.id}`} style={{ cursor: "pointer" }}>
+        <div style={{ cursor: "pointer" }} onClick={handleClick}>
             <Card.Img
                 variant="top"
                 src={`${item.photo}`}
                 style={{ width: '180px', height: '200px' }}
             />
-        </LinkContainer>
+        </div>
         <Card.Body style={{
             display: "grid",
             placeItems: "center",

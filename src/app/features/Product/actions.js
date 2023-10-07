@@ -28,7 +28,6 @@ export const fetchProducts = () => {
             let { data: { aaData } } = await getProducts(params);
             // console.log({ aaData });
             // console.log(aaData);
-            console.log('action 1');
 
             dispatch(fetchingProduct({ aaData }));
         } catch (error) {

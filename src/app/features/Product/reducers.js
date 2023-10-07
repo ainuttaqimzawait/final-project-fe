@@ -15,7 +15,6 @@ const productReducer = (state = initialState, action) => {
         case FETCHING_PRODUCT:
             let sate = { ...state, data: [...state.data, ...action.payload.aaData] }
             // console.log(sate);
-            console.log('reducer 1');
             return sate
         case TOGGLE_CATEGORY:
             return { ...state, categories: action.payload.categories }

@@ -1,29 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getDetailProduct, getVarian } from "../../app/api/products";
+import { getVarian } from "../../app/api/products";
 import { Button, Card, Image, ListGroup } from "react-bootstrap";
 import { React } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import 'swiper/css/bundle';
-import { config } from "../../config";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 const Detail = () => {
     const { id } = useParams();
-    const [detail, setDetail] = useState([]);
+    const detailItem = useSelector(state => state.detailItem);
     const [varian, setVarian] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     useEffect(() => {
-        getDetailProduct(id)
-            .then(({ data }) => setDetail(data))
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .finally(function () {
-                // always executed
-            });
         getVarian(id)
             .then(({ data }) => setVarian(data))
             .catch(function (error) {
@@ -42,13 +33,7 @@ const Detail = () => {
     return (
         <div style={{ width: "100vw", paddingTop: "105px", display: "flex" }}>
             <div style={{ width: "300px", margin: "0px 20px 0px 20px" }}>
-                <Card.Img variant="top" src={varian} style={{ width: "300px", height: "450px", marginBottom: "20px" }} />
-                {varian.map((e) => {
-                    return <div>
-                        {/* <Image src={`${config.url}/img/user/hijja/product/${e.product_img}`} style={{ width: "70px", height: "100px" }}></Image> */}
-                        {console.log(`${config.url}/img/user/hijja/product/${e.photos}`)}
-                    </div>
-                })}
+                <Card.Img variant="top" src={detailItem.data.photo} style={{ width: "350px", height: "425px", marginBottom: "20px" }} />
                 <Swiper
                     modules={[Navigation, Pagination, A11y]}
                     spaceBetween={20}
@@ -58,16 +43,23 @@ const Detail = () => {
                     scrollbar={{ draggable: true }}
                     style={{ width: "250px" }}
                 >
-                    <SwiperSlide style={{ backgroundColor: "green", width: "70px", height: "100px" }}>Slide 4</SwiperSlide>
-                    <SwiperSlide style={{ backgroundColor: "silver", width: "70px", height: "100px" }}>Slide 5</SwiperSlide>
+                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
+                        <Image src={detailItem.data.photo} style={{ width: "80px", height: "100px" }} />
+                    </SwiperSlide>
+                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
+                        <Image src={detailItem.data.photos[0]} style={{ width: "80px", height: "100px" }} />
+                    </SwiperSlide>
+                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
+                        <Image src={detailItem.data.photos[1]} style={{ width: "80px", height: "100px" }} />
+                    </SwiperSlide>
                 </Swiper>
             </div>
             <ListGroup className="list-group-flush" style={{ width: "600px", margin: "0px 20px 0px 20px" }}>
                 {selectedItem ? (
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>
-                            <h3>{detail.product_name}</h3>
-                            <h1>Rp. {detail.product_price}</h1>
+                            <h3>{selectedItem.product_name}</h3>
+                            <h1>{detailItem.data.currency} {detailItem.data.price}</h1>
                             <div>Stock: {selectedItem.product_qty_stock}</div>
                         </ListGroup.Item>
                         <ListGroup.Item>{selectedItem.product_description}</ListGroup.Item>
@@ -75,11 +67,11 @@ const Detail = () => {
                 ) : (
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>
-                            <h3>{detail.product_name}</h3>
-                            <h1>Rp. {detail.product_price}</h1>
-                            <div>Stock: {detail.product_qty_stock}</div>
+                            <h3>{detailItem.data.name}</h3>
+                            <h1>{detailItem.data.currency} {detailItem.data.price}</h1>
+                            <div>Stock: {detailItem.data.stock}</div>
                         </ListGroup.Item>
-                        <ListGroup.Item>{detail.product_description}</ListGroup.Item>
+                        <ListGroup.Item>{detailItem.data.description}</ListGroup.Item>
                     </ListGroup>
                 )}
                 <ListGroup.Item className="detail-ukuran">
@@ -116,8 +108,9 @@ const Detail = () => {
                     </Button>
                 </ListGroup.Item>
             </ListGroup>
-            {console.log(detail)}
-            {console.log(varian)}
+            {/* {console.log(detail)} */}
+            {/* {console.log(varian)} */}
+            {console.log(detailItem)}
         </div>
     )
 }

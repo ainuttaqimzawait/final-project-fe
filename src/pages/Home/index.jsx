@@ -20,7 +20,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(fetchProducts());
-    }, [dispatch, products.categories, products.currentPage]);
+    }, [products.categories, products.currentPage]);
 
     const loadMore = () => {
         return dispatch(setPage())
@@ -38,9 +38,6 @@ const Home = () => {
             const target = entries[0];
             if (target.isIntersecting && hasMore) {
                 loadMore();
-                console.log("Kondisi terpenuhi, memanggil loadMore()");
-            } else {
-                console.log("Kondisi tidak terpenuhi, loadMore() tidak dipanggil");
             }
         }, options);
     }, [hasMore]);
@@ -49,14 +46,14 @@ const Home = () => {
         if (lastProductElementRef.current) {
             observer.current.observe(lastProductElementRef.current);
         }
-        console.log('use2')
     }, [hasMore]);
 
 
     return (
         <div style={{ paddingBottom: "0px" }}>
-            {console.log(hasMore)}
-            {console.log(products.data.length)}
+            {/* {console.log(hasMore)} */}
+            {/* {console.log(products.data.length)} */}
+            {/* {console.log(products)} */}
             <div
                 style={{
                     width: '100w',

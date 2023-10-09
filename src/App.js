@@ -7,7 +7,7 @@ import TopBar from "./components/TopBar";
 
 function App() {
   return (
-    <div className="App" style={{ height: "200vh" }}>
+    <div className="App">
       <Provider store={store}>
         <BrowserRouter>
           <TopBar />

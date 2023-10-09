@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Card, Form, NavDropdown } from 'react-bootstrap';
 import { getVarian } from '../../app/api/products';
 import { useNavigate } from 'react-router-dom';
@@ -14,11 +14,9 @@ export default function CardProduct({ item }) {
         getVarian(item.id)
             .then(({ data }) => setVarian(data))
             .catch(function (error) {
-                // handle error
                 console.log(error);
             })
             .finally(function () {
-                // always executed
             });
     }, [])
 
@@ -26,7 +24,6 @@ export default function CardProduct({ item }) {
         let payload = {
             detailProduct: item
         }
-        // console.log(payload)
         dispatch(getDetailItem(payload));
         navigate(`/detail/${item.id}`);
     }
@@ -38,7 +35,9 @@ export default function CardProduct({ item }) {
             margin: '0px 10px 20px 10px',
             paddingBottom: "5px"
         }}>
-        <div style={{ cursor: "pointer" }} onClick={handleClick}>
+        <div
+            style={{ cursor: "pointer" }}
+            onClick={handleClick}>
             <Card.Img
                 variant="top"
                 src={`${item.photo}`}
@@ -60,14 +59,22 @@ export default function CardProduct({ item }) {
                 {item.currency} {item.price}
             </Card.Text>
             <Form.Select size="sm"
-                style={{ border: "1px solid silver", padding: "0px 20px 0px 5px", margin: "0px", width: "auto" }}>
+                style={{
+                    border: "1px solid silver",
+                    padding: "0px 20px 0px 5px",
+                    margin: "0px", width: "auto"
+                }}>
                 {varian.map((e, i) => {
                     return <option key={i} href="#action/3.1">{e.varian_keyword_value} ({e.product_qty_stock})</option>
                 })}
             </Form.Select>
-            {/* {console.log(varian)} */}
-            {/* {console.log(products.data.length)} */}
-            <Button style={{ padding: "0px 10px 0px 10px", height: "30px", fontSize: "13px" }} variant="primary">Masukkan Keranjang</Button>
+            <Button style={{
+                backgroundColor: "#843b49",
+                padding: "0px 10px 0px 10px",
+                height: "30px",
+                fontSize: "13px",
+                border: "none"
+            }} >Masukkan Keranjang</Button>
         </Card.Body>
     </Card>
 }

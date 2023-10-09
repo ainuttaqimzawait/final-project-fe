@@ -11,18 +11,23 @@ import { faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-i
 import { getCategoriess } from '../../app/api/products';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch } from 'react-redux';
-import { toggleCategories } from '../../app/features/Product/actions';
+import { keywordProduct, toggleCategories } from '../../app/features/Product/actions';
+import { useNavigate } from 'react-router-dom';
 
 function TopBar() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [search, setSearch] = useState('')
     const [category, setCategory] = useState([])
     useEffect(() => {
         getCategoriess()
             .then(({ data }) => setCategory(data.aaData));
     }, []);
+
     return (
         < Navbar expand="lg" className="bg-body-tertiary" style={{ position: 'fixed', zIndex: "999", width: "100vw" }
         }>
+            {/* {console.log(search)} */}
             {/* {console.log(category)} */}
             <Container fluid>
                 <LinkContainer to="/">
@@ -39,9 +44,12 @@ function TopBar() {
                                     type="search"
                                     placeholder="Search"
                                     className="me-2"
-                                    aria-label="Search" style={{ width: '700px' }}
+                                    aria-label="Search"
+                                    value={search}
+                                    onChange={(event) => setSearch(event.target.value)}
+                                    style={{ width: '700px' }}
                                 />
-                                <Button variant="outline-success" style={{ marginLeft: "-50px", border: "none" }}>
+                                <Button variant="outline-success" style={{ marginLeft: "-50px", border: "none" }} onClick={() => { dispatch(keywordProduct(search)); navigate(`/`); }}>
                                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                                 </Button>
                             </div>
@@ -51,7 +59,7 @@ function TopBar() {
                                 return (
                                     <Nav.Link
                                         key={i}
-                                        onClick={() => { dispatch(toggleCategories(e.keyword_id)) }}
+                                        onClick={() => { dispatch(toggleCategories(e.keyword_id)); navigate(`/`); }}
                                         style={{ fontSize: "13px", height: "14px" }}>
                                         {e.keyword_name}
                                     </Nav.Link>
@@ -60,7 +68,7 @@ function TopBar() {
                         </Nav>
                     </Nav>
                     <LinkContainer to="/">
-                        <Nav.Link href="#action1" className='me-5'>
+                        <Nav.Link className='me-5' onClick={() => alert("halaman belum dibuat")}>
                             <FontAwesomeIcon icon={faCartShopping} />
                         </Nav.Link >
                     </LinkContainer>
@@ -68,9 +76,9 @@ function TopBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Register</Nav.Link>
+                        <Nav.Link href="#action1" onClick={() => alert("halaman belum dibuat")}>Register</Nav.Link>
                         <div style={{ marginTop: "8px" }}>|</div>
-                        <Nav.Link href="#action2">Login</Nav.Link>
+                        <Nav.Link href="#action2" onClick={() => alert("halaman belum dibuat")}>Login</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -5,7 +5,6 @@ export const getDetailItem = (payload) => {
         try {
             let { detailProduct } = payload
             // console.log({ detailProduct });
-
             dispatch(detailItem({ detailProduct }));
         } catch (error) {
             console.log(error)

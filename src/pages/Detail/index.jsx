@@ -14,15 +14,14 @@ const Detail = () => {
     const detailItem = useSelector(state => state.detailItem);
     const [varian, setVarian] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedSwipper, setSelectedSwipper] = useState(null);
     useEffect(() => {
         getVarian(id)
             .then(({ data }) => setVarian(data))
             .catch(function (error) {
-                // handle error
                 console.log(error);
             })
             .finally(function () {
-                // always executed
             });
     }, []);
 
@@ -30,10 +29,44 @@ const Detail = () => {
         const selectedItem = varian.find((item) => item.product_id === itemId);
         setSelectedItem(selectedItem);
     };
+
+    const photosProduct = [
+        detailItem.data.photo,
+        detailItem.data.photos[0],
+        detailItem.data.photos[1]];
+
+    const handleSwipperClick = (i) => {
+        const selectedSwipper = photosProduct[i]
+        setSelectedSwipper(selectedSwipper);
+    }
     return (
-        <div style={{ width: "100vw", paddingTop: "105px", display: "flex" }}>
-            <div style={{ width: "300px", margin: "0px 20px 0px 20px" }}>
-                <Card.Img variant="top" src={detailItem.data.photo} style={{ width: "350px", height: "425px", marginBottom: "20px" }} />
+        <div style={{
+            width: "100vw",
+            paddingTop: "105px",
+            display: "flex"
+        }}>
+            <div style={{
+                width: "300px",
+                margin: "0px 20px 0px 20px"
+            }}>
+                {
+                    selectedSwipper ?
+                        <Card.Img variant="top"
+                            src={selectedSwipper}
+                            style={{
+                                width: "350px",
+                                height: "425px",
+                                marginBottom: "20px"
+                            }} />
+                        :
+                        <Card.Img variant="top"
+                            src={detailItem.data.photo}
+                            style={{
+                                width: "350px",
+                                height: "425px",
+                                marginBottom: "20px"
+                            }} />
+                }
                 <Swiper
                     modules={[Navigation, Pagination, A11y]}
                     spaceBetween={20}
@@ -43,18 +76,27 @@ const Detail = () => {
                     scrollbar={{ draggable: true }}
                     style={{ width: "250px" }}
                 >
-                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
-                        <Image src={detailItem.data.photo} style={{ width: "80px", height: "100px" }} />
-                    </SwiperSlide>
-                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
-                        <Image src={detailItem.data.photos[0]} style={{ width: "80px", height: "100px" }} />
-                    </SwiperSlide>
-                    <SwiperSlide style={{ width: "80px", height: "100px" }}>
-                        <Image src={detailItem.data.photos[1]} style={{ width: "80px", height: "100px" }} />
-                    </SwiperSlide>
+                    {
+                        photosProduct.map((e, i) => {
+                            return <SwiperSlide
+                                key={i}
+                                style={{
+                                    width: "80px",
+                                    height: "100px",
+                                    cursor: "pointer"
+                                }}
+                                onClick={() => handleSwipperClick(i)}>
+                                <Image src={e} style={{ width: "80px", height: "100px" }} />
+                            </SwiperSlide>
+                        })
+                    }
                 </Swiper>
             </div>
-            <ListGroup className="list-group-flush" style={{ width: "600px", margin: "0px 20px 0px 20px" }}>
+            <ListGroup className="list-group-flush"
+                style={{
+                    width: "600px",
+                    margin: "0px 20px 0px 20px"
+                }}>
                 {selectedItem ? (
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>
@@ -64,16 +106,18 @@ const Detail = () => {
                         </ListGroup.Item>
                         <ListGroup.Item>{selectedItem.product_description}</ListGroup.Item>
                     </ListGroup>
-                ) : (
-                    <ListGroup className="list-group-flush">
-                        <ListGroup.Item>
-                            <h3>{detailItem.data.name}</h3>
-                            <h1>{detailItem.data.currency} {detailItem.data.price}</h1>
-                            <div>Stock: {detailItem.data.stock}</div>
-                        </ListGroup.Item>
-                        <ListGroup.Item>{detailItem.data.description}</ListGroup.Item>
-                    </ListGroup>
-                )}
+                )
+                    :
+                    (
+                        <ListGroup className="list-group-flush">
+                            <ListGroup.Item>
+                                <h3>{detailItem.data.name}</h3>
+                                <h1>{detailItem.data.currency} {detailItem.data.price}</h1>
+                                <div>Stock: {detailItem.data.stock}</div>
+                            </ListGroup.Item>
+                            <ListGroup.Item>{detailItem.data.description}</ListGroup.Item>
+                        </ListGroup>
+                    )}
                 <ListGroup.Item className="detail-ukuran">
                     <p>Ukuran</p>
                     {varian.map((e) => {
@@ -108,9 +152,6 @@ const Detail = () => {
                     </Button>
                 </ListGroup.Item>
             </ListGroup>
-            {/* {console.log(detail)} */}
-            {/* {console.log(varian)} */}
-            {console.log(detailItem)}
         </div>
     )
 }

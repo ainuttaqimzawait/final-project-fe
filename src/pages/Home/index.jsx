@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from '../../components/Carousel';
 import { useEffect, useRef, useState } from "react";
-import { Col, Nav, Row } from 'react-bootstrap';
+import { Col, Nav, Row, Spinner } from 'react-bootstrap';
 import CardProduct from '../../components/CardProduct';
 import { fetchProducts, setPage } from '../../app/features/Product/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,14 +13,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Home = () => {
     const products = useSelector(state => state.products);
     const dispatch = useDispatch();
-
     const [hasMore, setHasMore] = useState(false);
     const observer = useRef();
 
-
     useEffect(() => {
         dispatch(fetchProducts());
-    }, [products.categories, products.currentPage]);
+    }, [products.categories, products.currentPage, products.search_name]);
 
     const loadMore = () => {
         return dispatch(setPage())
@@ -51,9 +49,6 @@ const Home = () => {
 
     return (
         <div style={{ paddingBottom: "0px" }}>
-            {/* {console.log(hasMore)} */}
-            {/* {console.log(products.data.length)} */}
-            {/* {console.log(products)} */}
             <div
                 style={{
                     width: '100w',
@@ -71,31 +66,67 @@ const Home = () => {
                         justifyContent: 'center'
                     }}>
                     <Row style={{ width: "1190px" }}>
-                        {products.data.map((product, i) => {
-                            return (
-                                <Col key={i} md={2}>
-                                    <CardProduct item={product} />
-                                </Col>
-                            )
-                        })}
-                        <Nav.Link
-                            onClick={() => { setHasMore(true) }}
-                            style={{
-                                display: "grid",
-                                placeItems: "center",
-                                fontSize: "30px",
-                                fontWeight: "bold",
-                                height: "14px",
-                                margin: "30px 0px 90px 0px",
-                                color: "orange"
+                        {products.status === 'success' && products.data.length === 0 ?
+                            <div style={{
+                                height: "50vh",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: "50px"
+                            }}>Tidak Ada Product</div>
+                            :
+                            products.data.map((product, i) => {
+                                return (
+                                    <Col key={i} md={2}>
+                                        <CardProduct item={product} />
+                                    </Col>
+                                )
+                            })}
+
+                        {products.data.length > 16 ?
+                            <Col style={{
+                                display: "flex",
+                                alignItems: "center",
+                                marginLeft: "50px"
                             }}>
-                            <div>Show More</div>
-                            <FontAwesomeIcon icon={faArrowDown} />
-                        </Nav.Link>
+                                <Nav.Link
+                                    onClick={() => { setHasMore(true) }}
+                                    style={{
+                                        display: "grid",
+                                        placeItems: "center",
+                                        fontSize: "30px",
+                                        fontWeight: "bold",
+                                        height: "14px",
+                                        margin: "30px 0px 90px 0px",
+                                        color: "orange"
+                                    }}>
+                                    <div>Show More</div>
+                                    <FontAwesomeIcon icon={faArrowDown} />
+                                </Nav.Link>
+                            </Col>
+                            :
+                            null}
+
+                        {products.status === 'proccess' ?
+                            <div style={{
+                                height: "50px",
+                                display: "flex",
+                                justifyContent: "center"
+                            }}>
+                                <Spinner animation="border" role="status" >
+                                    <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                            </div>
+                            :
+                            null}
                     </Row>
                 </div>
 
-                <div ref={lastProductElementRef} style={{ backgroundColor: "black", height: "1px", width: "100vw" }}></div>
+                <div ref={lastProductElementRef} style={{
+                    backgroundColor: "black",
+                    height: "1px",
+                    width: "100vw"
+                }}></div>
                 <Footer />
             </div>
         </div>

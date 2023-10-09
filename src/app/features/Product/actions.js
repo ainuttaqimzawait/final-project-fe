@@ -1,19 +1,18 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { getProducts } from "../../api/products";
-import { FETCHING_PRODUCT, SET_LOADING, SET_PAGE, TOGGLE_CATEGORY } from "./constants";
+import { SEARCH_NAME, SET_PAGE, START_FETCHING_PRODUCT, SUCCESS_FETCHING_PRODUCT, TOGGLE_CATEGORY } from "./constants";
 
-export const fetchingProduct = (payload) => ({
-    type: FETCHING_PRODUCT,
+export const startFetchingProduct = () => ({
+    type: START_FETCHING_PRODUCT,
+})
+
+export const successFetchingProduct = (payload) => ({
+    type: SUCCESS_FETCHING_PRODUCT,
     payload
 })
 
-// export const setLoading = () => ({
-//     type: SET_LOADING
-// })
-
 export const fetchProducts = () => {
     return async (dispatch, getState) => {
-        // dispatch({ type: 'SET_LOADING' });
+        dispatch(startFetchingProduct());
         let currentPage = getState().products.currentPage || 1;
         let sorting = getState().products.sorting || 'Lates';
         let categories = getState().products.categories || 'all';
@@ -27,9 +26,7 @@ export const fetchProducts = () => {
         try {
             let { data: { aaData } } = await getProducts(params);
             // console.log({ aaData });
-            // console.log(aaData);
-
-            dispatch(fetchingProduct({ aaData }));
+            dispatch(successFetchingProduct({ aaData }));
         } catch (error) {
             console.log(error)
         }
@@ -40,6 +37,13 @@ export const toggleCategories = (categories) => ({
     type: TOGGLE_CATEGORY,
     payload: {
         categories: categories
+    }
+})
+
+export const keywordProduct = (keyword) => ({
+    type: SEARCH_NAME,
+    payload: {
+        search_name: keyword
     }
 })
 
